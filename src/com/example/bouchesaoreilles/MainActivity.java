@@ -2,20 +2,14 @@ package com.example.bouchesaoreilles;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.app.Activity;
 import android.widget.LinearLayout;
-import android.os.Bundle;
 import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.content.ComponentName;
 import android.content.Context;
-import android.text.Editable;
 import android.util.Log;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
@@ -37,9 +31,6 @@ public class MainActivity extends Activity
     
     private AudioManager mAudioManager;
     private ComponentName mRemoteControlResponder;
-    
-   
-    
     
 
     private void onRecord(boolean start) {
@@ -162,10 +153,7 @@ public class MainActivity extends Activity
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
     }
-
-    
-    
-    
+ 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
