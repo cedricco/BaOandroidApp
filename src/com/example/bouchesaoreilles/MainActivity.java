@@ -13,9 +13,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.content.ComponentName;
 import android.content.Context;
 import android.text.Editable;
 import android.util.Log;
+import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 
@@ -33,7 +35,8 @@ public class MainActivity extends Activity
     private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
     
-    
+    private AudioManager mAudioManager;
+    private ComponentName mRemoteControlResponder;
     
    
     
@@ -166,7 +169,9 @@ public class MainActivity extends Activity
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-
+        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        mRemoteControlResponder = new ComponentName(getPackageName(),
+        		RemoteControlReceiver.class.getName());
         LinearLayout ll = new LinearLayout(this);
         mRecordButton = new RecordButton(this);
         ll.addView(mRecordButton,
@@ -195,5 +200,17 @@ public class MainActivity extends Activity
             mPlayer.release();
             mPlayer = null;
         }
+    }
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	mAudioManager.registerMediaButtonEventReceiver(
+    			mRemoteControlResponder);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAudioManager.unregisterMediaButtonEventReceiver(
+                mRemoteControlResponder);
     }
 }
